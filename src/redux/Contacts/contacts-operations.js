@@ -11,13 +11,14 @@ import {
   deleteContactError,
 } from './contacts-actions';
 
-axios.defaults.baseURL = 'http://localhost:8080/contacts';
+axios.defaults.baseURL =
+  'http://goit-phonebook-api.herokuapp.com';
 
 const fetchContacts = () => dispatch => {
   dispatch(fetchContactsRequest());
 
   axios
-    .get('')
+    .get('/contacts')
     .then(({ data }) =>
       dispatch(fetchContactsSuccess(data)),
     )
@@ -28,7 +29,7 @@ const addContact = contact => dispatch => {
   dispatch(addContactRequest());
 
   axios
-    .post('', contact)
+    .post('/contacts', contact)
     .then(({ data }) => dispatch(addContactSuccess(data)))
     .catch(error => dispatch(addContactError(error)));
 };
@@ -37,7 +38,7 @@ const deleteContact = id => dispatch => {
   dispatch(deleteContactRequest());
 
   axios
-    .delete(`/${id}`)
+    .delete(`/contacts/${id}`)
     .then(() => dispatch(deleteContactSuccess(id)))
     .catch(error => dispatch(deleteContactError(error)));
 };
