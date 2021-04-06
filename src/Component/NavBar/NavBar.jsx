@@ -1,50 +1,16 @@
-import { NavLink } from 'react-router-dom';
-import routes from '../../routes';
-import { createUseStyles } from 'react-jss';
+import { useSelector } from 'react-redux';
+import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
 
-const useStyles = createUseStyles({
-  navLink: {
-    color: 'black',
-    marginRight: '20px',
-  },
-  isActive: {
-    color: 'orange',
-  },
-});
+import Navigation from '../Navigation';
+import AuthBar from '../AuthBar';
+import UserMenu from '../UserMenu';
 
 const NavBar = () => {
-  const classes = useStyles();
+  const isAuthenticated = useSelector(getIsAuthenticated);
   return (
     <header>
-      <NavLink
-        exact
-        to={routes.home}
-        className={classes.navLink}
-        activeClassName={classes.isActive}
-      >
-        Home
-      </NavLink>
-      <NavLink
-        to={routes.contacts}
-        className={classes.navLink}
-        activeClassName={classes.isActive}
-      >
-        Contacts
-      </NavLink>
-      <NavLink
-        to={routes.login}
-        className={classes.navLink}
-        activeClassName={classes.isActive}
-      >
-        Login
-      </NavLink>
-      <NavLink
-        to={routes.register}
-        className={classes.navLink}
-        activeClassName={classes.isActive}
-      >
-        register
-      </NavLink>
+      <Navigation />
+      {isAuthenticated ? <UserMenu /> : <AuthBar />}
     </header>
   );
 };

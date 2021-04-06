@@ -1,65 +1,43 @@
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-
+import { useEffect } from 'react';
 import routes from './routes';
 import NavBar from './Component/NavBar';
-
 import Loader from 'react-loader-spinner';
+import { useDispatch } from 'react-redux';
+import { getCurrentUser } from './redux/auth/auth-operations';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const HomeView = lazy(() =>
-  import(
-    './views/HomeView' /* webpackChunkName: "home-page" */
-  ),
+  import('./views/HomeView' /* webpackChunkName: "home-page" */),
 );
 const ContactsView = lazy(() =>
-  import(
-    './views/ContactsView' /* webpackChunkName: "ContactsView" */
-  ),
+  import('./views/ContactsView' /* webpackChunkName: "ContactsView" */),
 );
 const LoginView = lazy(() =>
-  import(
-    './views/LoginView' /* webpackChunkName: "LoginView" */
-  ),
+  import('./views/LoginView' /* webpackChunkName: "LoginView" */),
 );
 const RegisterView = lazy(() =>
-  import(
-    './views/RegisterView' /* webpackChunkName: "RegisterView" */
-  ),
+  import('./views/RegisterView' /* webpackChunkName: "RegisterView" */),
 );
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCurrentUser());
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
       <NavBar />
       <Suspense
-        fallback={
-          <Loader
-            type="Rings"
-            color="#FFF"
-            height={80}
-            width={80}
-          />
-        }
+        fallback={<Loader type="Rings" color="#FFF" height={80} width={80} />}
       >
         <Switch>
-          <Route
-            exact
-            path={routes.home}
-            component={HomeView}
-          />
-          <Route
-            path={routes.contacts}
-            component={ContactsView}
-          />
-          <Route
-            path={routes.login}
-            component={LoginView}
-          />
-          <Route
-            path={routes.register}
-            component={RegisterView}
-          />
+          <Route exact path={routes.home} component={HomeView} />
+          <Route path={routes.contacts} component={ContactsView} />
+          <Route path={routes.login} component={LoginView} />
+          <Route path={routes.register} component={RegisterView} />
           <Redirect to={routes.home} />
         </Switch>
       </Suspense>
