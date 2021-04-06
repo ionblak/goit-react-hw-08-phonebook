@@ -1,8 +1,7 @@
-import { connect } from 'react-redux';
-import { fetchContacts } from '../redux/Contacts/contacts-operations';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from '../redux/Contacts/contacts-operations';
 import { getLoading } from '../redux/Contacts/contacts-selectors';
-
 import Container from '../Component/Container';
 import ContactList from '../Component/ContactsList';
 import Filter from '../Component/Filter';
@@ -10,10 +9,13 @@ import ContactForm from '../Component/ContactForm';
 
 import Loader from 'react-loader-spinner';
 
-const ContactsView = ({ getContacts, isLoading }) => {
+const ContactsView = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getLoading);
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+    dispatch(fetchContacts());
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Container>
@@ -36,14 +38,4 @@ const ContactsView = ({ getContacts, isLoading }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isLoading: getLoading(state),
-});
-const mapDispatchToProps = dispatch => ({
-  getContacts: () => dispatch(fetchContacts()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ContactsView);
+export default ContactsView;
