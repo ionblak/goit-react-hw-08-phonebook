@@ -31,10 +31,24 @@ const RegisterViev = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={name} onChange={handleChangeName} />
-      <input type="email" value={email} onChange={handleChangeEmail} />
-      <input type="password" value={password} onChange={handleChangePassword} />
+    <form autoComplete="off" onSubmit={handleSubmit}>
+      <label>
+        Name
+        <input type="text" value={name} onChange={handleChangeName} />
+      </label>
+      <label>
+        Email
+        <input type="email" value={email} onChange={handleChangeEmail} />
+      </label>
+      <label>
+        Password
+        <input
+          type="password"
+          value={password}
+          onChange={handleChangePassword}
+        />
+      </label>
+
       <button type="submit">Register</button>
     </form>
   );

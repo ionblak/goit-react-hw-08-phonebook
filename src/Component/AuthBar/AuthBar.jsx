@@ -27,7 +27,7 @@ const AuthBar = () => {
         className={classes.navLink}
         activeClassName={classes.isActive}
       >
-        register
+        Register
       </NavLink>
     </>
   );

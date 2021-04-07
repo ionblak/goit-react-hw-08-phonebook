@@ -37,5 +37,36 @@ const error = createReducer(null, {
   [logoutError]: setError,
   [getCurrentUserError]: setError,
 });
+const IsAuthenticated = createReducer(false, {
+  [registerSuccess]: () => true,
+  [loginSuccess]: () => true,
+  [getCurrentUserSuccess]: () => true,
 
-export default combineReducers({ user, token, error });
+  [registerError]: () => false,
+  [loginError]: () => false,
+  [getCurrentUserError]: () => false,
+  [logoutSuccess]: () => false,
+});
+const loading = createReducer(false, {
+  [registerRequest]: () => true,
+  [loginRequest]: () => true,
+  [logoutRequest]: () => true,
+  [getCurrentUserRequest]: () => true,
+
+  [registerSuccess]: () => false,
+  [loginSuccess]: () => false,
+  [logoutSuccess]: () => false,
+  [getCurrentUserSuccess]: () => false,
+
+  [registerError]: () => false,
+  [loginError]: () => false,
+  [logoutError]: () => false,
+  [getCurrentUserError]: () => false,
+});
+export default combineReducers({
+  user,
+  token,
+  error,
+  IsAuthenticated,
+  loading,
+});

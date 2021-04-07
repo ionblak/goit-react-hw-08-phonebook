@@ -1,8 +1,10 @@
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
 import { useEffect } from 'react';
 import routes from './routes';
 import NavBar from './Component/NavBar';
+import PrivateRoute from './Component/PrivateRoute';
+import PublicRoute from './Component/PublicRoute';
 import Loader from 'react-loader-spinner';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './redux/auth/auth-operations';
@@ -31,13 +33,35 @@ const App = () => {
     <div>
       <NavBar />
       <Suspense
-        fallback={<Loader type="Rings" color="#FFF" height={80} width={80} />}
+        fallback={
+          <Loader
+            type="Puff"
+            color="#000"
+            height={100}
+            width={100}
+            timeout={3000}
+          />
+        }
       >
         <Switch>
-          <Route exact path={routes.home} component={HomeView} />
-          <Route path={routes.contacts} component={ContactsView} />
-          <Route path={routes.login} component={LoginView} />
-          <Route path={routes.register} component={RegisterView} />
+          <PublicRoute exact path={routes.home} component={HomeView} />
+          <PrivateRoute
+            path={routes.contacts}
+            component={ContactsView}
+            redirectTo={routes.login}
+          />
+          <PublicRoute
+            path={routes.login}
+            component={LoginView}
+            restricted
+            redirectTo={routes.contacts}
+          />
+          <PublicRoute
+            path={routes.register}
+            restricted
+            component={RegisterView}
+            redirectTo={routes.contacts}
+          />
           <Redirect to={routes.home} />
         </Switch>
       </Suspense>
