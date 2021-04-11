@@ -5,9 +5,12 @@ import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
+  nav: {
+    display: 'flex',
+  },
   navLink: {
-    color: 'black',
-    marginRight: '20px',
+    color: 'white',
+    marginRight: '10px',
   },
   isActive: {
     color: 'orange',
@@ -18,7 +21,7 @@ const Navigation = () => {
   const classes = useStyles();
   const IsAuthenticated = useSelector(getIsAuthenticated);
   return (
-    <>
+    <nav className={classes.nav}>
       <NavLink
         exact
         to={routes.home}
@@ -36,7 +39,7 @@ const Navigation = () => {
           Contacts
         </NavLink>
       )}
-    </>
+    </nav>
   );
 };
 export default Navigation;

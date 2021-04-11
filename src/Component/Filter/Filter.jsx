@@ -6,6 +6,9 @@ import { getValueFilter } from '../../redux/Contacts/contacts-selectors';
 import { filterOutContacts } from '../../redux/Contacts/contacts-actions';
 
 const useStyles = createUseStyles({
+  filter: {
+    marginBottom: '20px',
+  },
   input: {
     padding: '5px',
     outline: 'none',
@@ -26,10 +29,8 @@ const useStyles = createUseStyles({
 const Filter = ({ value, onHandleChange }) => {
   const classes = useStyles();
   return (
-    <div>
-      <h3 className={classes.titel}>
-        Find contacts by name
-      </h3>
+    <div className={classes.filter}>
+      <h3 className={classes.titel}>Find contacts by name</h3>
       <input
         className={classes.input}
         type="text"
@@ -50,10 +51,6 @@ const mapStateToProps = state => ({
   value: getValueFilter(state),
 });
 const mapDispatchToProps = dispatch => ({
-  onHandleChange: e =>
-    dispatch(filterOutContacts(e.target.value)),
+  onHandleChange: e => dispatch(filterOutContacts(e.target.value)),
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

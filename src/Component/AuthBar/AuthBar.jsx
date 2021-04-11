@@ -3,9 +3,12 @@ import routes from '../../routes';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
+  authBar: {
+    display: 'flex',
+  },
   navLink: {
     color: 'black',
-    marginRight: '20px',
+    marginRight: '10px',
   },
   isActive: {
     color: 'orange',
@@ -14,7 +17,7 @@ const useStyles = createUseStyles({
 const AuthBar = () => {
   const classes = useStyles();
   return (
-    <>
+    <div className={classes.authBar}>
       <NavLink
         to={routes.login}
         className={classes.navLink}
@@ -29,7 +32,7 @@ const AuthBar = () => {
       >
         Register
       </NavLink>
-    </>
+    </div>
   );
 };
 

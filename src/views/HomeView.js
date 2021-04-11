@@ -3,7 +3,7 @@ import Container from '../Component/Container';
 const HomeView = () => {
   return (
     <Container>
-      <h2>Hello world</h2>
+      <h1>Hello world</h1>
     </Container>
   );
 };

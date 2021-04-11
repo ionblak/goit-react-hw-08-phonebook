@@ -6,10 +6,19 @@ const useStyles = createUseStyles({
     margin: {
       right: 'auto',
       left: 'auto',
-      top: '20px',
     },
     padding: '20px',
-    width: '400px',
+    width: '280px',
+  },
+  '@media (min-width: 720px)': {
+    container: {
+      width: 680,
+    },
+  },
+  '@media (min-width: 1200px)': {
+    container: {
+      width: 1160,
+    },
   },
 });
 const Container = ({ children }) => {
