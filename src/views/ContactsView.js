@@ -6,16 +6,14 @@ import Container from '../Component/Container';
 import ContactList from '../Component/ContactsList';
 import Filter from '../Component/Filter';
 import ContactForm from '../Component/ContactForm';
-
-import Loader from 'react-loader-spinner';
+import LoaderContainer from '../Component/LoaderContainer';
 
 const ContactsView = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getLoading);
   useEffect(() => {
     dispatch(fetchContacts());
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
@@ -23,17 +21,7 @@ const ContactsView = () => {
       <ContactForm />
       <h2>Contacts</h2>
       <Filter />
-      {isLoading ? (
-        <Loader
-          type="Puff"
-          color="#000"
-          height={100}
-          width={100}
-          timeout={3000}
-        />
-      ) : (
-        <ContactList />
-      )}
+      {isLoading ? <LoaderContainer /> : <ContactList />}
     </Container>
   );
 };

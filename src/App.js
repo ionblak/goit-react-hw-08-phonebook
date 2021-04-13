@@ -5,7 +5,7 @@ import routes from './routes';
 import NavBar from './Component/NavBar';
 import PrivateRoute from './Component/PrivateRoute';
 import PublicRoute from './Component/PublicRoute';
-import Loader from 'react-loader-spinner';
+import LoaderContainer from './Component/LoaderContainer';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './redux/auth/auth-operations';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -27,22 +27,11 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCurrentUser());
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <NavBar />
-      <Suspense
-        fallback={
-          <Loader
-            type="Puff"
-            color="#000"
-            height={100}
-            width={100}
-            timeout={3000}
-          />
-        }
-      >
+      <Suspense fallback={<LoaderContainer />}>
         <Switch>
           <PublicRoute exact path={routes.home} component={HomeView} />
           <PrivateRoute

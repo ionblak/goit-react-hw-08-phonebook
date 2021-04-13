@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getValueFilter } from '../../redux/Contacts/contacts-selectors';
 import { filterOutContacts } from '../../redux/Contacts/contacts-actions';
 
@@ -26,8 +25,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const Filter = ({ value, onHandleChange }) => {
+const Filter = () => {
   const classes = useStyles();
+  const value = useSelector(getValueFilter);
+  const dispatch = useDispatch();
   return (
     <div className={classes.filter}>
       <h3 className={classes.titel}>Find contacts by name</h3>
@@ -37,20 +38,10 @@ const Filter = ({ value, onHandleChange }) => {
         placeholder="Search contact"
         name="filter"
         value={value}
-        onChange={onHandleChange}
+        onChange={e => dispatch(filterOutContacts(e.target.value))}
       ></input>
     </div>
   );
 };
 
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onHandleChange: PropTypes.func.isRequired,
-};
-const mapStateToProps = state => ({
-  value: getValueFilter(state),
-});
-const mapDispatchToProps = dispatch => ({
-  onHandleChange: e => dispatch(filterOutContacts(e.target.value)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;

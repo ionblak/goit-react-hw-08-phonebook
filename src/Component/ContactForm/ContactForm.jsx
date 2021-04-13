@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from '../../redux/Contacts/contacts-operations';
 import { getfilteredContacts } from '../../redux/Contacts/contacts-selectors';
 
-import PropTypes from 'prop-types';
 import ButtonForm from './ButtonForm';
 import styles from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
-const Contactform = ({ onSubmitForm, items }) => {
+const Contactform = () => {
+  const items = useSelector(getfilteredContacts);
+  const dispatch = useDispatch();
+
   const labelInputIdName = uuidv4();
   const labelInputIdNumber = uuidv4();
 
@@ -19,15 +21,13 @@ const Contactform = ({ onSubmitForm, items }) => {
     const contact = { name: name, number: number };
     e.preventDefault();
 
-    const isOridginal = items.some(
-      item => item.name === contact.name,
-    );
+    const isOridginal = items.some(item => item.name === contact.name);
     if (isOridginal) {
       alert(`${contact.name} is already in contacts`);
       resetForm();
       return;
     }
-    onSubmitForm(contact);
+    dispatch(addContact(contact));
 
     resetForm();
   };
@@ -45,10 +45,7 @@ const Contactform = ({ onSubmitForm, items }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label
-        className={styles.label}
-        htmlFor={labelInputIdName}
-      >
+      <label className={styles.label} htmlFor={labelInputIdName}>
         Name
       </label>
       <input
@@ -61,10 +58,7 @@ const Contactform = ({ onSubmitForm, items }) => {
         value={name}
         onChange={handleChange}
       ></input>
-      <label
-        className={styles.label}
-        htmlFor={labelInputIdNumber}
-      >
+      <label className={styles.label} htmlFor={labelInputIdNumber}>
         Number
       </label>
       <input
@@ -82,17 +76,4 @@ const Contactform = ({ onSubmitForm, items }) => {
   );
 };
 
-Contactform.propTypes = {
-  onSubmitForm: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({
-  items: getfilteredContacts(state),
-});
-const mapDispatchToProps = dispatch => ({
-  onSubmitForm: contact => dispatch(addContact(contact)),
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Contactform);
+export default Contactform;
