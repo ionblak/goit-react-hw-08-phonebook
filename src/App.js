@@ -41,8 +41,8 @@ const App = () => {
           />
           <PublicRoute
             path={routes.login}
-            component={LoginView}
             restricted
+            component={LoginView}
             redirectTo={routes.contacts}
           />
           <PublicRoute
