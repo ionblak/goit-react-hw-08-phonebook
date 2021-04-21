@@ -1,4 +1,4 @@
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
 import { useEffect } from 'react';
 import routes from './routes';
@@ -34,7 +34,11 @@ const App = () => {
       <Suspense fallback={<LoaderContainer />}>
         <Switch>
           <PublicRoute exact path={routes.home} component={HomeView} />
-          <PrivateRoute path={routes.contacts} component={ContactsView} />
+          <PrivateRoute
+            path={routes.contacts}
+            component={ContactsView}
+            redirectTo={routes.login}
+          />
           <PublicRoute
             path={routes.login}
             restricted
@@ -47,7 +51,6 @@ const App = () => {
             component={RegisterView}
             redirectTo={routes.contacts}
           />
-          <Redirect to={routes.home} />
         </Switch>
       </Suspense>
     </div>
