@@ -34,11 +34,7 @@ const App = () => {
       <Suspense fallback={<LoaderContainer />}>
         <Switch>
           <PublicRoute exact path={routes.home} component={HomeView} />
-          <PrivateRoute
-            path={routes.contacts}
-            component={ContactsView}
-            redirectTo={routes.login}
-          />
+          <PrivateRoute path={routes.contacts} component={ContactsView} />
           <PublicRoute
             path={routes.login}
             restricted
